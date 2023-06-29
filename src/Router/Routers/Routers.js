@@ -1,12 +1,21 @@
 import { createBrowserRouter } from "react-router-dom";
-
-
-import Login from "../../Pages/Login/Login";
-
 import Home from "../../Pages/Home/Home";
 import Main from "../../layout/Main";
-import Reviews from "../../Pages/Reviews/Reviews";
-import MakeAppointment from "../../Pages/MakeAppointment/MakeAppointment";
+import Testimonial from "../../Pages/Testimonial/Testimonial";
+import SignUp from "../../Pages/UserCreateAndLogin/SignUp";
+import Login from "../../Pages/UserCreateAndLogin/Login";
+import ContactUs from "../../Pages/ContactUs/ContactUs";
+import About from "../../Pages/About/About";
+import Appointment from "../../Pages/Appointment/Appointment/Appointment";
+import Dashboard from "../../Pages/Dashboard/Dashboard/Dashboard";
+import PrivateRoutes from "../PrivateRoutes/PrivateRoutes";
+import DashboardLayout from "../../layout/DashboardLayout";
+import MyAppointment from "../../Pages/Dashboard/MyAppointment/MyAppointment";
+import AllUsers from "../../Pages/Dashboard/AllUsers/AllUsers";
+import AdminRoute from "../AdminRoute/AdminRoute";
+import AddDoctors from "../../Pages/Dashboard/AddDoctors/AddDoctors";
+import ManageDoctors from "../../Pages/Dashboard/ManageDoctors/ManageDoctors";
+
 
 
 export const routes = createBrowserRouter([
@@ -19,18 +28,60 @@ export const routes = createBrowserRouter([
                 element: <Home></Home>
             },
             {
-                path: '/login',
-                element: <Login></Login>
+                path:'/about',
+                element:<About></About>
             },
             {
-                path: '/review',
-                element: <Reviews></Reviews>
+              path:'/contact',
+              element:<ContactUs></ContactUs>
+            },
+            {
+                path: '/reviews',
+                element: <Testimonial></Testimonial>
             },
             {
                 path: '/appointment',
-                element: <MakeAppointment></MakeAppointment>
+                element:<Appointment></Appointment>
             },
-
+            {
+                path: '/login',
+                element:<Login></Login>
+            },
+            {
+                path:'/register',
+                element:<SignUp></SignUp>
+            },
+            {
+                path:'/signup',
+                element:<SignUp></SignUp>
+            },
+            {
+                path:'/dashboard',
+                element:<Dashboard/>
+            }
+             
+        ]
+    },
+    {
+        path: '/dashboard',
+        element:<PrivateRoutes><DashboardLayout></DashboardLayout></PrivateRoutes>,
+        children: [
+            {
+               path:'/dashboard',
+               element:<MyAppointment></MyAppointment>
+            },{
+                path:'/dashboard/allusers',
+                element:<AdminRoute><AllUsers></AllUsers></AdminRoute>
+            }
+            ,{
+                path:'/dashboard/adddoctor',
+                element:<AdminRoute><AddDoctors></AddDoctors></AdminRoute>
+            },
+            ,{
+                path:'/dashboard/managedoctor',
+                element:<AdminRoute><ManageDoctors></ManageDoctors></AdminRoute>
+            },
+          
         ]
     }
 ])

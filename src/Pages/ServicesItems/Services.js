@@ -2,7 +2,8 @@ import React from 'react';
 import fluoride from '../../../src/assets/images/fluoride.png'
 import cavity from '../../../src/assets/images/cavity.png'
 import whitening from '../../../src/assets/images/whitening.png'
-import Service from '../Service/Service';
+import Service from './Service';
+
 const Services = () => {
     const services = [
         {

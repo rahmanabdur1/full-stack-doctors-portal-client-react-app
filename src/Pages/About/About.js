@@ -1,11 +1,11 @@
 import React from 'react';
 
-const ContactUs = () => {
+const About = () => {
     return (
         <div>
-contuct form
+            about
         </div>
     );
 };
 
-export default ContactUs;
+export default About;
