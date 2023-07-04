@@ -6,14 +6,15 @@ const AllUsers = () => {
   const { data: users = [], refetch } = useQuery({
     queryKey: ['users'],
     queryFn: async () => {
-      const res = await fetch('http://localhost:5000/users');
+      const res = await fetch('https://full-doctors-portal-server-code.vercel.app/users');
       const data = await res.json();
       return data;
     },
   });
 
   const handleMakeAdmin = (id) => {
-    fetch(`http://localhost:5000/users/admin/${id}`, {
+    console.log('jdfn',id)
+    fetch(`https://full-doctors-portal-server-code.vercel.app/users/admin/${id}`, {
       method: 'PUT',
       headers: {
         authorization: `bearer ${localStorage.getItem('accessToken')}`,
@@ -21,6 +22,7 @@ const AllUsers = () => {
     })
       .then((res) => res.json())
       .then((data) => {
+        console.log(data ,'kjk')
         if (data.modifiedCount > 0) {
           toast.success('Make admin successful');
           refetch();
@@ -49,7 +51,8 @@ const AllUsers = () => {
                 <td>{user.name}</td>
                 <td>{user.email}</td>
                 <td>
-                  {user?.role !== 'admin' && (
+                  
+                  { user?.role !== 'admin' && (
                     <button
                       onClick={() => handleMakeAdmin(user._id)}
                       className="btn btn-xs btn-primary"

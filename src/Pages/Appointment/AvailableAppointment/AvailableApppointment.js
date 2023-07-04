@@ -4,15 +4,16 @@ import AppointmentOption from './AppointmentOption';
 import BookingModal from '../BookingModal/BookingModal';
 import { useQuery } from 'react-query';
 import Loading from '../../Loading/Loading';
+import useTitle from '../../../hook/useHooks';
 const AvailableApppointment = ({selectedDate}) => {
     const [treatment, setTreatment]=useState(null)
     const date = format(selectedDate, 'PP');
-
+    useTitle("Appointment")
     const {data:appointmentoptions = [], refetch,isLoading}=useQuery({
         queryKey: ['appointmentoptions',date],
         //combinationkey
         queryFn: async() =>{
-            const res =await fetch (`http://localhost:5000/appointmentOptions?date=${date}`)
+            const res =await fetch (`https://full-doctors-portal-server-code.vercel.app/appointmentOptions?date=${date}`)
             const data =await res.json();
             return data
         }      

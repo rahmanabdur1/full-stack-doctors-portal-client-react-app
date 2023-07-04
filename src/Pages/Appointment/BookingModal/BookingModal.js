@@ -2,11 +2,13 @@ import React, { useContext } from 'react';
 import { format } from 'date-fns';
 import { AuthContext } from '../../../contexts/AuthProvider';
 import { toast } from 'react-hot-toast';
+import useTitle from '../../../hook/useHooks';
 
 const BookingModal = ({ refetch,treatment, selectedDate, setTreatment }) => {
-  const { name: treatmentName, slots } = treatment;
+  const { name: treatmentName, slots ,price} = treatment;
   const date = format(selectedDate, 'PP');
   const { user } = useContext(AuthContext)
+  useTitle("BookingModal")
   const handleBooking = (e) => {
     e.preventDefault();
     const form = e.target;
@@ -22,10 +24,11 @@ const BookingModal = ({ refetch,treatment, selectedDate, setTreatment }) => {
       slot,
       email,
       phone,
+      price
     }
     console.log(booking);
 
-    fetch('http://localhost:5000/bookings', {
+    fetch('https://full-doctors-portal-server-code.vercel.app/bookings', {
       method: 'POST',
       headers: {
         'content-type': 'application/json'

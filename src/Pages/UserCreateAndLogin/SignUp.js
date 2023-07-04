@@ -6,6 +6,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../contexts/AuthProvider';
 import { toast } from 'react-hot-toast';
 import useToken from '../../hooks/useHooks';
+import useTitle from '../../hook/useHooks';
 
 const SignUp = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
@@ -13,7 +14,9 @@ const SignUp = () => {
     const [signupError, setsignupError] = useState('');
     const [createUserEmail, setCreateUserEmail,] = useState('');
     const [token] = useToken(createUserEmail)
-    const navigate = useNavigate()
+    const navigate = useNavigate();
+    
+    useTitle("Signup");
 
     if (token) {
         navigate('/')
@@ -44,7 +47,7 @@ const SignUp = () => {
 
     const saveUser = (name, email) => {
         const user = { name, email };
-        fetch('http://localhost:5000/users', {
+        fetch('https://full-doctors-portal-server-code.vercel.app/users', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json'

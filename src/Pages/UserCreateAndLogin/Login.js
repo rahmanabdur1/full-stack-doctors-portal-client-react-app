@@ -5,6 +5,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../contexts/AuthProvider';
 import { useContext } from 'react';
 import useToken from '../../hooks/useHooks';
+import useTitle from '../../hook/useHooks';
 
 const Login = () => {
   const { register, handleSubmit, formState: { errors } } = useForm();
@@ -15,6 +16,8 @@ const Login = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const from = location.state?.from?.pathname || '/';
+  
+  useTitle('Login');
 
   if (token) {
     navigate(from, { replace: true });

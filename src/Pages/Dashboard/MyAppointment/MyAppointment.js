@@ -1,16 +1,18 @@
 import React, { useContext } from 'react';
 import { AuthContext } from '../../../contexts/AuthProvider';
 import { useQuery } from 'react-query';
+import './MyApppointment.css';
+import { Link } from 'react-router-dom';
 
 const MyAppointment = () => {
   const { user } = useContext(AuthContext);
 
-  const url = `http://localhost:5000/bookings?email=${user?.email}`;
+  const url = `https://full-doctors-portal-server-code.vercel.app/bookings?email=${user?.email}`;
 
   const { data: bookings = [] } = useQuery({
     queryKey: ['bookings', user?.email],
     queryFn: async () => {
-      const res = await fetch(url,{
+      const res = await fetch(url, {
         headers: {
           authorization: `bearer ${localStorage.getItem('accessToken')}`
         }
@@ -40,22 +42,38 @@ const MyAppointment = () => {
               <th>Treatment</th>
               <th>Date</th>
               <th>Time</th>
+              <th>Payment</th>
             </tr>
           </thead>
           <tbody>
             {
-            bookings &&
-            bookings.map((booking, i) => (
-              <tr key={booking._id}>
-                <th>{i + 1}</th>
-                <td>{booking.patient}</td>
-                <td>{booking.treatment}</td>
-                <td>{booking.appointmentDate}</td>
-                <td>
-                  {booking.slots} {getCurrentTime()}
-                </td>
-              </tr>
-            ))}
+              bookings &&
+              bookings.map((booking, i) => (
+                <tr key={booking._id}>
+                  <th>{i + 1}</th>
+                  <td>{booking.patient}</td>
+                  <td>{booking.treatment}</td>
+                  <td>{booking.appointmentDate}</td>
+                  <td>{booking.slots} {getCurrentTime()}</td>
+                  <td>
+                 
+                    {booking.price && !booking.paid ? (
+                     <Link to={`/dashboard/payment/${booking._id}`}>
+                      <button
+                       className='btn btn-primary
+                        btn-sm pulsing-button'>
+                        Pay</button>
+                     </Link>
+                    ) : (
+                      booking.price && booking.paid && (
+                        <span className='btn btn-primary'>Paid</span>
+                      )
+                    )}
+                  </td>
+                </tr>
+              ))
+            }
+
           </tbody>
         </table>
       </div>

@@ -3,7 +3,9 @@ import clock from '../../../src/assets/icons/clock.svg';
 import marker from '../../../src/assets/icons/marker.svg';
 import phone from '../../../src/assets/icons/phone.svg'
 import InfoCard from './InfoCard';
+import useTitle from '../../hook/useHooks';
 const InfoCards = () => {
+    useTitle('About')
     const cardData = [
         {
             id: 1,
